@@ -223,6 +223,7 @@ create an Entry
     + form (required, number, `100032`) ... **Form** `id`.
     + unique_id (required, string, `uuid-2323-sd32-0pd3-sfdb`) ... **max length: 128**
     + custom_data (optional, string) ... You can save custom data to this field, **max length: 128**
+
     
 + Request (application/json)
     
@@ -233,7 +234,7 @@ create an Entry
         }
 
 + Response 201 (application/json)
-
+        
 
 ## Entry Detail [/api/v1/entries/{entry_id}/]
 
@@ -258,6 +259,7 @@ create an Entry
 
 
 ## Entry Answers [/api/v1/entries/{entry_id}/answers/]
+
 ### List all answers of an entry [GET]
 + Response 200 (application/json)
 
@@ -267,28 +269,34 @@ create an Entry
             "": 
         }]
 
+
+
 # Group Answer
 **Answers** of a stage
 
-## Answers Collection [/api/v1/reports/{repotrt_id}/stages/{stage_id}/answers]
 
-### List all Answers [GET]
-+ Response 200 (application/json)
+## Answer Resource [/api/v1/answers/]
 
-        [{
-          "id": 1, "name": "Jogging in park"
-        }, {
-          "id": 2, "name": "Pick-up posters from post-office"
-        }]
-        
-        
 ### Create an Answer [POST]
+
+Create an answer would update the **status,progress,score** of the stage.
+<br/>
+The score of answer will be auto calculated according to `answer` in parameters.
+
++ Parameters
+
+    + entry (required, number, `100032`) ... `Entry` id
+    + question (required, number, `1399333`) ... `Question` id
+    + answer (required, string) ... according to question type this value should be:<br/>
+    `text,email,link` => `string` <br/>
+    `number` => `number` in string format <br/>
+    `radio,checkbox,select` => one of the question options
+
 
 + Request (application/json)
 
         {
             "entry": 1234234,
-            "stage": 12342342,
             "question": 2345235,
             "answer": "value"
         }
