@@ -212,12 +212,31 @@ A single Form object with all its details
             "id": 1033234,
         }]
 
+
 ## Entry Resource [/api/v1/entries/]
+
 ### Create an Entry [POST]
+create an Entry
+
++ Parameters
+
+    + form (required, number, `100032`) ... **Form** `id`.
+    + unique_id (required, string, `uuid-2323-sd32-0pd3-sfdb`) ... **max length: 128**
+    + custom_data (optional, string) ... You can save custom data to this field, **max length: 128**
+    
++ Request (application/json)
+    
+        {
+            "form": 242325,
+            "unique_id": "udd-2323-233-2333",
+            "custom_data": "uid:xxxxx"
+        }
+
 + Response 201 (application/json)
 
 
 ## Entry Detail [/api/v1/entries/{entry_id}/]
+
 ### Retrieve an Entry [GET]
 + Response 200 (application/json)
 
@@ -248,7 +267,7 @@ A single Form object with all its details
             "": 
         }]
 
-# Group Answer Not Implemented
+# Group Answer
 **Answers** of a stage
 
 ## Answers Collection [/api/v1/reports/{repotrt_id}/stages/{stage_id}/answers]
@@ -262,14 +281,24 @@ A single Form object with all its details
           "id": 2, "name": "Pick-up posters from post-office"
         }]
         
+        
 ### Create an Answer [POST]
+
 + Request (application/json)
 
-        { "name": "Stage 1" }
+        {
+            "entry": 1234234,
+            "stage": 12342342,
+            "question": 2345235,
+            "answer": "value"
+        }
 
 + Response 201 (application/json)
 
-        { "id": 3, "title": "Stage 1" }
+        { 
+            "id": 3, 
+            "title": "Stage 1" 
+        }
         
         
 
