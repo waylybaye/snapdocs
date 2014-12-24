@@ -247,9 +247,18 @@ create an Entry
             "custom_data": "uid:1234234",
             "stages": [
                 {
+                    "stage_id": 23234,
                     "name": "Stage1",
-                    "status": "wip"
-                }
+                    "status": "wip",
+                    "score": 20 /* percent, 20% */
+                    "progress": 30 /* percent, 30% */
+                },
+                {
+                    "stage_id": 23444,
+                    "name": "Stage 2",
+                    "score": 40,
+                    "progress": 50,
+                    "status": "new"  /* one of new,wip,complete */
             ],
             "created_at": ""
         }
@@ -263,11 +272,18 @@ create an Entry
 ### List all answers of an entry [GET]
 + Response 200 (application/json)
 
-        [{
-            "stage": 10234,
-            "question": 234234,
-            "": 
-        }]
+        [
+            { 
+                "id": 2, 
+                "entry": 309808,
+                "question": 234234234,
+                "answer": "Male",
+                "custom_data": "",
+                "file_name": "xxx.pdf",
+                "file": "http://snapi.io/xxxx/sdf39-23234-df-wer.pdf",
+                "score": 10
+            }
+        ]
 
 
 
@@ -303,10 +319,16 @@ The score of answer will be auto calculated according to `answer` in parameters.
 
 + Response 201 (application/json)
 
-        { 
-            "id": 3, 
-            "title": "Stage 1" 
-        }
+            { 
+                "id": 2, 
+                "entry": 309808,
+                "question": 234234234,
+                "answer": "Male",
+                "custom_data": "",
+                "file_name": "xxx.pdf",
+                "file": "http://snapi.io/xxxx/sdf39-23234-df-wer.pdf",
+                "score": 10
+            }
         
         
 
@@ -321,7 +343,16 @@ The score of answer will be auto calculated according to `answer` in parameters.
 
     + Body
 
-            { "id": 2, "name": "Stage 1" }
+            { 
+                "id": 2, 
+                "entry": 309808,
+                "question": 234234234,
+                "answer": "Male",
+                "custom_data": "",
+                "file_name": "xxx.pdf",
+                "file": "http://snapi.io/xxxx/sdf39-23234-df-wer.pdf",
+                "score": 10
+            }
 
 ### Remove a Answer [DELETE]
 + Response 204
