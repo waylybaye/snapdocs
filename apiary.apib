@@ -203,14 +203,35 @@ A single Form object with all its details
         
 # Group Entry 
 
-## Entry Collection [/api/v1/forms/{form_id}/entries/]
+## Form Entries [/api/v1/forms/{form_id}/entries/]
 
 ### List all Entries of a form [GET]
 + Response 200 (application/json)
 
         [{
-            "id": 1033234,
-        }]
+            "id": 2341234234,
+            "unique_id": "uudd-ddxx-23dd-qer1",
+            "custom_data": "uid:1234234",
+            "score": 20,  /* percent, 20% */
+            "progress": 30, /* percent, 30% */
+            "status": "new", /* one of new,wip,complete */
+            "stages": [
+                {
+                    "stage_id": 23234,
+                    "name": "Stage1",
+                    "status": "wip",
+                    "score": 20,  /* percent, 20% */
+                    "progress": 30,  /* percent, 30% */
+                },
+                {
+                    "stage_id": 23444,
+                    "name": "Stage 2",
+                    "score": 40,
+                    "progress": 50,
+                    "status": "new"  /* one of new,wip,complete */
+            ],
+            "created_at": ""
+        },]
 
 
 ## Entry Resource [/api/v1/entries/]
@@ -234,7 +255,30 @@ create an Entry
         }
 
 + Response 201 (application/json)
-        
+        {
+            "id": 2341234234,
+            "unique_id": "uudd-ddxx-23dd-qer1",
+            "custom_data": "uid:1234234",
+            "score": 20,  /* percent, 20% */
+            "progress": 30, /* percent, 30% */
+            "status": "new", /* one of new,wip,complete */
+            "stages": [
+                {
+                    "stage_id": 23234,
+                    "name": "Stage1",
+                    "status": "wip",
+                    "score": 20,  /* percent, 20% */
+                    "progress": 30,  /* percent, 30% */
+                },
+                {
+                    "stage_id": 23444,
+                    "name": "Stage 2",
+                    "score": 40,
+                    "progress": 50,
+                    "status": "new"  /* one of new,wip,complete */
+            ],
+            "created_at": ""
+        }        
 
 ## Entry Detail [/api/v1/entries/{entry_id}/]
 
@@ -245,13 +289,16 @@ create an Entry
             "id": 2341234234,
             "unique_id": "uudd-ddxx-23dd-qer1",
             "custom_data": "uid:1234234",
+            "score": 20,  /* percent, 20% */
+            "progress": 30, /* percent, 30% */
+            "status": "new", /* one of new,wip,complete */
             "stages": [
                 {
                     "stage_id": 23234,
                     "name": "Stage1",
                     "status": "wip",
-                    "score": 20 /* percent, 20% */
-                    "progress": 30 /* percent, 30% */
+                    "score": 20,  /* percent, 20% */
+                    "progress": 30,  /* percent, 30% */
                 },
                 {
                     "stage_id": 23444,
