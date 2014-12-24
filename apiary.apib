@@ -1,0 +1,291 @@
+FORMAT: 1A
+
+# SNAPI
+
+**SNAPI** is an API service provided by **IndirectSales**
+
+Design Guide: https://github.com/interagent/http-api-design
+
+
+## HTTP Response Code
+Successful responses:
+
+* 200: Request succeeded for a GET calls, and for DELETE or PATCH calls that complete synchronously
+* 201: Request succeeded for a POST call that completes synchronously
+* 202: Request accepted for a POST, DELETE, or PATCH call that will be processed asynchronously
+* 204: Request succeeded for a POST/DELETE call that complete synchronously, but NO CONTENT returned
+* 206: Request succeeded on GET, but only a partial response returned: see above on ranges
+
+Authentication and authorization error codes:
+
+* 401 Unauthorized: Request failed because user is not authenticated
+* 403 Forbidden: Request failed because user does not have authorization to access a specific resource
+
+Failed responses:
+
+* 422 Unprocessable Entity: Your request was understood, but contained invalid parameters
+* 429 Too Many Requests: You have been rate-limited, retry later
+* 500 Internal Server Error: Something went wrong on the server, check status site and/or report the issue
+
+# Group Form
+Form related resources of the **Custom Form API**
+
+## Forms Collection [/api/v1/forms/]
+### List all Forms [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "name": "Form 1", "total_score": 100, "allow_score": true
+        }, {
+          "id": 2, "name": "Custom Form 2", "total_score": 0, "allow_score": false
+        }]
+
+### Create a Form [POST]
++ Parameters
+    + name (required, string, `My Form`) ... Form `name`.
+    + allow_score (optional, boolean, `false`) ... Does this form allow scoring.
+    
++ Request (application/json)
+
+        { "name": "New form name", "allow_score": true }
+
++ Response 201 (application/json)
+
+        { "id": 3, "name": "New Form name", "allow_score": true, "total_score": 0 }
+
+
+## Form Detail [/api/v1/forms/{id}/]
+A single Form object with all its details
+
+### Retrieve a Form [GET]
++ Response 200 (application/json)
+
+        { "id": 2, "name": "Form Name", "allow_score": true, "total_score": 100 }
+
+### Remove a Form [DELETE]
++ Response 204
+
+## Deleted Form [/api/v1/forms/{id}/restore/]
+### Restore a deleted Form [POST]
++ Response 204
+
+## Form Stages [/api/v1/forms/{id}/stages/]
+### List all Stages [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "name": "Stage 1", "order": 0, "total_score": 100
+        }, {
+          "id": 2, "name": "Stege 2", "order": 1, "total_score": 50
+        }]
+        
+
+# Group Stage
+**Custom Form** stages
+
+## Stages Collection [/api/v1/stages/]
+        
+### Create a Stage [POST]
++ Parameters
+    + name (required, string, `Stage 1`) ... Stage `name`.
+    + form (required, number, `2`) ... The `Form` id.
+    + order (required, positive number, `0`) ... All stages will sort by this order,
+    
++ Request (application/json)
+
+        { "name": "Stage 1", "form": 1, "order": 1 }
+
++ Response 201 (application/json)
+
+        { "id": 1000034, "title": "Stage 1", "form": 1, "order": 1 }    
+        
+        
+## Stage Detail [/api/v1/stages/{id}/]
+
+### Retrieve a Stage [GET]
++ Response 200 (application/json)
+
+        { "id": 1000034, "title": "Stage 1", "form": 1, "order": 1 }
+        
+### Delete a Stage [DELETE]
++ Response 204
+
+## Deleted Stage [/api/v1/stages/{id}/restore/]
+### Restore a deleted stage [POST]
++ Response 204
+
+## Stage Questions [/api/v1/stages/{id}/questions/]
+
+### List all Questions [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 112333, 
+          "name": "What's your name?",
+          "type": "text", 
+          "is_required": true, 
+          "order": 0, 
+          "score": 10, 
+          "attributes": {"max_chars": 100},
+          "description": "help text"
+        }, {
+          "id": 212334, 
+          "name": "What's your gender?",
+          "type": "radio",
+          "is_required": true,
+          "order": 1,
+          "score": 5,
+          "options": [{
+            "option": "Male", "score": 5
+          }, {
+            "option": "Female", "score": 5
+          }],
+          "description": "help text"
+        }]
+
+
+# Group Question
+**Questions** of a stage
+
+## Questions Resource [/api/v1/questions/]
+
+### Create a Question [POST]
+
++ Parameters
+
+    + stage (required, number, `100032`) ... Stage `id`.
+    + title (required, string, `What's your name?`) ... The`title` of question.
+    + type (required, string, `text`) ... one of `[text, number, email, link, radio, checkbox, select, date, file, paragraph]`
+    + order (required, positive number, `0`) ... All questions will sort by this order.
+    + description (optional, string) ... the description of this question.
+    + options (optional, list, `[{option: "Male", score: 5}, {}]`) ... required by type of `['radio', 'checkbox', 'select']`
+    + attributes (optional, dict, `{max_chars: 100}`) ... extra attributes of each widget
+    
+    
++ Request (application/json)
+
+        { "title": "Question 1" }
+
++ Response 201 (application/json)
+
+        { "id": 3, "title": "Stage 1" }
+        
+        
+## Question Detail [/api/v1/questions/{id}/]
+
+### Retrieve a Question [GET]
++ Response 200 (application/json)
+
+        {
+          "id": 212334, 
+          "name": "What's your gender?",
+          "type": "radio",
+          "is_required": true,
+          "order": 1,
+          "score": 5,
+          "attributes": {},
+          "options": [{
+            "option": "Male", "score": 5
+          }, {
+            "option": "Female", "score": 5
+          }],
+          "description": "help text"
+        }
+
+### Remove a Question [DELETE]
++ Response 204
+
+## Deleted Question [/api/v1/questions/{id}/restore/]
+### Restore a deleted Question [POST]
++ Response 204
+
+        
+        
+# Group Entry 
+
+## Entry Collection [/api/v1/forms/{form_id}/entries/]
+
+### List all Entries of a form [GET]
++ Response 200 (application/json)
+
+        [{
+            "id": 1033234,
+        }]
+
+## Entry Resource [/api/v1/entries/]
+### Create an Entry [POST]
++ Response 201 (application/json)
+
+
+## Entry Detail [/api/v1/entries/{entry_id}/]
+### Retrieve an Entry [GET]
++ Response 200 (application/json)
+
+        {
+            "id": 2341234234,
+            "unique_id": "uudd-ddxx-23dd-qer1",
+            "custom_data": "uid:1234234",
+            "stages": [
+                {
+                    "name": "Stage1",
+                    "status": "wip"
+                }
+            ],
+            "created_at": ""
+        }
+
+### Remove an Entry [DELETE]
++ Response 204
+
+
+## Entry Answers [/api/v1/entries/{entry_id}/answers/]
+### List all answers of an entry [GET]
++ Response 200 (application/json)
+
+        [{
+            "stage": 10234,
+            "question": 234234,
+            "": 
+        }]
+
+# Group Answer Not Implemented
+**Answers** of a stage
+
+## Answers Collection [/api/v1/reports/{repotrt_id}/stages/{stage_id}/answers]
+
+### List all Answers [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "name": "Jogging in park"
+        }, {
+          "id": 2, "name": "Pick-up posters from post-office"
+        }]
+        
+### Create an Answer [POST]
++ Request (application/json)
+
+        { "name": "Stage 1" }
+
++ Response 201 (application/json)
+
+        { "id": 3, "title": "Stage 1" }
+        
+        
+
+## Answer Detail [/api/v1/answers/{id}]
+
+### Retrieve a Answer [GET]
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            { "id": 2, "name": "Stage 1" }
+
+### Remove a Answer [DELETE]
++ Response 204
+
