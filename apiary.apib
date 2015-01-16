@@ -216,18 +216,21 @@ A single Form object with all its details
             "status": "new", /* one of new,wip,complete */
             "stages": [
                 {
+                    "id": 1234234,
                     "stage_id": 23234,
-                    "name": "Stage1",
+                    "stage_name": "Stage1",
                     "status": "wip",
                     "score": 20,  /* percent, 20% */
                     "progress": 30,  /* percent, 30% */
                 },
                 {
+                    "id": 2342344
                     "stage_id": 23444,
-                    "name": "Stage 2",
+                    "stage_name": "Stage 2",
                     "score": 40,
                     "progress": 50,
                     "status": "new"  /* one of new,wip,complete */
+                }
             ],
             "created_at": ""
         },]
@@ -254,6 +257,7 @@ create an Entry
         }
 
 + Response 201 (application/json)
+
         {
             "id": 2341234234,
             "unique_id": "uudd-ddxx-23dd-qer1",
