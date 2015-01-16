@@ -4,7 +4,6 @@ FORMAT: 1A
 
 **SNAPI** is an API service provided by **IndirectSales**
 
-Design Guide: https://github.com/interagent/http-api-design
 
 
 ## HTTP Response Code
@@ -333,6 +332,16 @@ create an Entry
         ]
 
 
+# Group Entry Stage
+
+## Entry Stage [/api/v1/entry-stages/{id}/]
+
+### Update Entry Stage [PATCH]
+
++ Parameters
+    + status (required, enum) ... one of `'new', 'in progress', 'complete'`
+
+
 
 # Group Answer
 **Answers** of a stage
@@ -379,7 +388,7 @@ The score of answer will be auto calculated according to `answer` in parameters.
         
         
 
-## Answer Detail [/api/v1/answers/{id}]
+## Answer Detail [/api/v1/answers/{id}/]
 
 ### Retrieve a Answer [GET]
 + Response 200 (application/json)
