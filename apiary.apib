@@ -362,7 +362,9 @@ The score of answer will be auto calculated according to `answer` in parameters.
     + answer (required, string) ... according to question type this value should be:<br/>
     `text,email,link` => `string` <br/>
     `number` => `number` in string format <br/>
-    `radio,checkbox,select` => one of the question options
+    `radio,select` => one of the question options. <br/>Should use `answers` when question is `checkbox`
+    + answers (optional, array) ... **required when question is** `checkbox`, 
+    shoule be a list of answers.
 
 
 + Request (application/json)
