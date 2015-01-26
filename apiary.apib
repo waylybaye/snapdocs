@@ -26,6 +26,31 @@ Failed responses:
 * 429 Too Many Requests: You have been rate-limited, retry later
 * 500 Internal Server Error: Something went wrong on the server, check status site and/or report the issue
 
+
+# Authentication
+
+You should add this HTTP Header in every call to all End Points
+
+    Authorization: Bearer <your-access-token>
+
+
+## OAuth2 [/api/v1/oauth2/access_token]
+
+### Get Access Token [POST]
++ Response 200 (application/json)
+
+        {"access_token": "<your-access-token>", "scope": "read", "expires_in": 86399, "refresh_token": "<your-refresh-token>"}
+        
++ Parameters
+
+    + client_id (required, string) ... Client ID
+    + client_secret (required, string) ... client secret key
+    + grant_type (required, string, `password`) ... Must be `password`
+    + username (required, string, `id@gmail.com`) ... User's username
+    + password (required, string) ... Usre's password
+    
+
+
 # Group Form
 Form related resources of the **Custom Form API**
 
