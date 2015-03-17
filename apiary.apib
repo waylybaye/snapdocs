@@ -27,6 +27,15 @@ Failed responses:
 * 500 Internal Server Error: Something went wrong on the server, check status site and/or report the issue
 
 
+# End Point
+Every Orginazation in snapi has a sub-domain like `org-id.snapi.io`, 
+you need to use this sub domain as API endpoints,
+or you can use `snapi.io` as endpoints and use an HTTP header to indicate the organization
+
+
+    X-Organization: organization-sub-domain
+
+
 # Authentication
 
 You should add this HTTP Header in every call to all End Points
@@ -35,6 +44,9 @@ You should add this HTTP Header in every call to all End Points
 
 
 ## OAuth2 [/api/v1/oauth2/access_token]
+
+**NOTE**: You should use `snapi.io` not `sub-domain.snapi.io` to get access token
+
 
 ### Get Access Token [POST]
 + Response 200 (application/json)
